@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using MediatrWeb.Configurations;
 
 namespace MediatrWeb
 {
@@ -22,6 +23,9 @@ namespace MediatrWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // awr 
+            services.Configure<GeneralConfig>(Configuration.GetSection("AppSettings:General"));
+
             // awr
             services.AddMediatR(typeof(Startup));
 
@@ -31,6 +35,7 @@ namespace MediatrWeb
                     options.CheckConsentNeeded = context => true;
                     options.MinimumSameSitePolicy = SameSiteMode.None;
                 });
+
 
             // awr
             services.AddSwaggerGen(c =>
@@ -45,6 +50,7 @@ namespace MediatrWeb
                 c.IncludeXmlComments(System.IO.Path.Combine(basePath, fileName));
 
             });
+
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
