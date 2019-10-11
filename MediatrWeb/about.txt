@@ -9,3 +9,25 @@ ETCD V3 Client
 base code all Generate by grpc tools.
 			https://fs7744.github.io/etcdcsharp/api/index.html#api-doc
 
+
+
+
+
+
+
+Зачем тестировать класс контроллера если можно дернуть эндпоинт через HttpClient? 
+будет полноценный integration test в процессе выполнения которого будет инициализирован в том числе и контроллер со всеми DI зависимостями, включая MediatR
+Что-то типа 
+
+    [Fact]
+    public async Task MySuperTest()
+    {
+        // Arrange
+        var client = _factory.CreateClient();
+
+        // Act
+        var response = await client.PostAsync("api/mediatr/Calc_Price", "{ size: 100 }");
+
+        // Assert
+        Assert.True(response.IsSuccessStatusCode); 
+    }

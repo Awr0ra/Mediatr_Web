@@ -37,6 +37,20 @@ namespace MediatrWeb.Controllers
             return await _mediator.Send(request);
         }
 
+        [HttpPost]
+        public async Task<MyPipeResponse> RunEtcd()
+        {
+            MyPipeRequest request = new MyPipeRequest();
+
+            request.MethodName = "Run_Etcd";
+            request.MetaData = JToken.FromObject(new RequestEtcd()
+            {
+                IdRequest = Guid.NewGuid()
+            });
+
+
+            return await _mediator.Send(request);
+        }
 
 
     }
